@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getdataApi } from "../redux/action";
 import {
@@ -12,12 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 const Dashboard = () => {
-  //   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const info = useSelector((state) => state.profile);
 
-  console.log(info.email);
-  let creds = JSON.parse(localStorage.getItem("creds"));
+  console.log(info);
+  let creds = localStorage.getItem("creds");
+
   useEffect(() => {
     dispatch(getdataApi(creds.email));
   }, []);
