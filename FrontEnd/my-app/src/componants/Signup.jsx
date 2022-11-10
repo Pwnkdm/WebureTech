@@ -16,16 +16,25 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signupApi } from "../redux/action";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [creds, setCreds] = useState([]);
-  console.log(creds);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
     let payload = { ...creds, [name]: value };
     setCreds(payload);
+  };
+
+  const handleClick = () => {
+    dispatch(signupApi(creds));
+    navigate("/login");
   };
   return (
     <Flex
@@ -54,13 +63,13 @@ const Signup = () => {
               <Box>
                 <FormControl id="firstName" isRequired>
                   <FormLabel>First Name</FormLabel>
-                  <Input onChange={handleChange} type="text" name="FirstName" />
+                  <Input onChange={handleChange} type="text" name="firstname" />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
-                  <Input onChange={handleChange} type="text" name="LastName" />
+                  <Input onChange={handleChange} type="text" name="lastname" />
                 </FormControl>
               </Box>
             </HStack>
@@ -90,6 +99,7 @@ const Signup = () => {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
+                onClick={handleClick}
                 loadingText="Submitting"
                 size="lg"
                 bg={"blue.400"}
